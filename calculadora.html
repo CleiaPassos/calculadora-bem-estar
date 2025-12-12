@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Bem-Estar</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 30px; }
+        input { padding: 5px; font-size: 16px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #ff69b4; color: white; border: none; border-radius: 5px; margin-top: 10px;}
+        h2 { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de Bem-Estar</h1>
+
+    <label for="peso">Peso (kg):</label>
+    <input type="text" id="peso" placeholder="Ex: 70"><br><br>
+
+    <label for="altura">Altura (m):</label>
+    <input type="text" id="altura" placeholder="Ex: 1.70"><br><br>
+
+    <label for="idade">Idade:</label>
+    <input type="text" id="idade" placeholder="Ex: 47"><br><br>
+
+    <button onclick="calcularIMC()">Calcular IMC</button>
+
+    <h2>Resultado:</h2>
+    <p id="resultado"></p>
+
+    <!-- Nota de referência da OMS -->
+    <p style="font-size: 12px; font-style: italic; margin-top: 20px;">
+        Os cálculos de IMC e as faixas de peso seguem a classificação da 
+        <a href="https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight" target="_blank">
+            Organização Mundial da Saúde (OMS)
+        </a>.
+    </p>
+
+    <script>
+        function calcularIMC() {
+            // Pegar valores digitados e substituir vírgula por ponto
+            let peso = document.getElementById("peso").value.replace(',', '.');
+            let altura = document.getElementById("altura").value.replace(',', '.');
+            let idade = document.getElementById("idade").value;
+
+            // Verificar se são números
+            if (isNaN(peso) || isNaN(altura) || isNaN(idade) || peso <= 0 || altura <= 0 || idade <= 0) {
+                document.getElementById("resultado").innerHTML = "Por favor, digite valores válidos para peso, altura e idade! ⚠️";
+                document.body.style.backgroundColor = "#ffe4e1"; // cor neutra para erro
+                return; // sai da função sem calcular
+            }
+
+            // Converter para número
+            peso = parseFloat(peso);
+            altura = parseFloat(altura);
+            idade = parseInt(idade);
+
+            // Calcular IMC
+            let imc = peso / (altura * altura);
+            imc = Math.round(imc * 100) / 100; // arredondar duas casas
+
+            // Montar resultado
+            let resultado = "Seu IMC é: " + imc + "<br>";
+
+            // Interpretação do IMC + mensagem motivacional com emojis e cores
+            if (imc < 18.5) {
+                resultado += "Você está abaixo do peso. 🌸<br>";
+                resultado += "Mensagem: Seu corpo merece carinho e atenção, cuide-se com amor! 💖";
+                document.body.style.backgroundColor = "#f7c6d7";
+            } else if (imc < 25) {
+                resultado += "Seu peso está normal. 🌟<br>";
+                resultado += "Mensagem: Parabéns! Continue cuidando de você com hábitos saudáveis. 🏅";
+                document.body.style.backgroundColor = "#a8e1e1";
+            } else if (imc < 30) {
+                resultado += "Você está acima do peso. ⚠️<br>";
+                resultado += "Mensagem: Pequenos passos diários fazem grande diferença, você consegue! 💪";
+                document.body.style.backgroundColor = "#f7e1b5";
+            } else {
+                resultado += "Você está com obesidade. 🚨<br>";
+                resultado += "Mensagem: Nunca é tarde para começar a se cuidar, você é capaz! 🌱";
+                document.body.style.backgroundColor = "#ffb3b3";
+            }
+
+            // Mensagem especial e dicas por idade
+            if (idade > 45) {
+                resultado += "<br>Mensagem especial: Você é incrível e cada cuidado consigo mesma conta! 💖";
+                resultado += "<br>Dica: Priorize atividades físicas leves, alimentação equilibrada e momentos de autocuidado. 🌸";
+            } else if (idade >= 31) {
+                resultado += "<br>Dica: Mantenha equilíbrio entre trabalho e lazer, faça exercícios regulares e cuide da alimentação. 🌟";
+            } else if (idade >= 15) {
+                resultado += "<br>Dica: Cuide da sua energia, mantenha hábitos saudáveis e aproveite momentos de lazer. ✨";
+            }
+
+            // Mostrar resultado na tela
+            document.getElementById("resultado").innerHTML = resultado;
+        }
+    </script>
+</body>
+</html>
