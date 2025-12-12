@@ -1,3 +1,13 @@
+## 🌸 Calculadora de Bem-Estar Feminino
+
+Este projeto é uma calculadora simples feita em Java (versão console) e uma versão HTML para treino de desenvolvimento front-end.
+
+### 🔗 Acesse a versão online (GitHub Pages)
+https://cleiapassos.github.io/calculadora-bem-estar/
+
+### 📁 Veja o código completo
+Todo o código-fonte está disponível aqui no repositório.
+
 # Calculadora de Bem-Estar Feminino 🌸💖
 
 Essa é uma **calculadora de IMC** pensada especialmente para mulheres, que além de calcular o índice de massa corporal, dá **mensagens motivacionais**, **dicas de bem-estar** e **cores/emoções fofas** para deixar o cuidado consigo mesma mais leve e divertido.
