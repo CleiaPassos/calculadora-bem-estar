@@ -1,98 +1,145 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Calculadora de Bem-Estar</title>
+    <title>Calculadora de Bem-Estar Feminino</title>
+
     <style>
-        body { font-family: Arial; text-align: center; padding: 30px; }
-        input { padding: 5px; font-size: 16px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #ff69b4; color: white; border: none; border-radius: 5px; margin-top: 10px;}
-        h2 { margin-top: 20px; }
+        body {
+            background-color: #f8cdda;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            width: 200px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff1493;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .nota {
+            margin-top: 30px;
+            font-size: 13px;
+            color: #333;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Calculadora de Bem-Estar</h1>
 
-    <label for="peso">Peso (kg):</label>
-    <input type="text" id="peso" placeholder="Ex: 70"><br><br>
+    <h1>💗 Calculadora de Bem-Estar Feminino</h1>
 
-    <label for="altura">Altura (m):</label>
-    <input type="text" id="altura" placeholder="Ex: 1.70"><br><br>
-
-    <label for="idade">Idade:</label>
-    <input type="text" id="idade" placeholder="Ex: 47"><br><br>
+    <input type="text" id="peso" placeholder="Peso (kg)">
+    <br>
+    <input type="text" id="altura" placeholder="Altura (ex: 1,70)">
+    <br>
+    <input type="number" id="idade" placeholder="Idade">
+    <br><br>
 
     <button onclick="calcularIMC()">Calcular IMC</button>
 
-    <h2>Resultado:</h2>
-    <p id="resultado"></p>
+    <div id="resultado"></div>
 
-    <!-- Nota de referência da OMS -->
-    <p style="font-size: 12px; font-style: italic; margin-top: 20px;">
-        Os cálculos de IMC e as faixas de peso seguem a classificação da 
-        <a href="https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight" target="_blank">
+    <div class="nota">
+        ℹ️ Classificação do IMC baseada nos critérios da  
+        <a href="https://www.who.int" target="_blank">
             Organização Mundial da Saúde (OMS)
         </a>.
-    </p>
+        <br>
+        Esta ferramenta é educativa e não substitui avaliação profissional.
+    </div>
 
     <script>
         function calcularIMC() {
-            // Pegar valores digitados e substituir vírgula por ponto
+
             let peso = document.getElementById("peso").value.replace(',', '.');
             let altura = document.getElementById("altura").value.replace(',', '.');
             let idade = document.getElementById("idade").value;
 
-            // Verificar se são números
-            if (isNaN(peso) || isNaN(altura) || isNaN(idade) || peso <= 0 || altura <= 0 || idade <= 0) {
-                document.getElementById("resultado").innerHTML = "Por favor, digite valores válidos para peso, altura e idade! ⚠️";
-                document.body.style.backgroundColor = "#ffe4e1"; // cor neutra para erro
-                return; // sai da função sem calcular
-            }
-
-            // Converter para número
+            // Converter para números
             peso = parseFloat(peso);
             altura = parseFloat(altura);
             idade = parseInt(idade);
 
-            // Calcular IMC
+            // Validação básica
+            if (isNaN(peso) || isNaN(altura) || isNaN(idade) || peso <= 0 || altura <= 0 || idade <= 0) {
+                document.getElementById("resultado").innerHTML =
+                    "⚠️ Por favor, preencha todos os campos corretamente.";
+                document.body.style.backgroundColor = "#ffe4e1";
+                return;
+            }
+
+            // 🔥 Validação de altura realista
+            if (altura > 2.5) {
+                document.getElementById("resultado").innerHTML =
+                    "🤔 Parece que você digitou a altura sem ponto ou vírgula.<br><br>" +
+                    "Use o formato correto, por exemplo:<br>" +
+                    "<strong>1.70</strong> ou <strong>1,70</strong>";
+                document.body.style.backgroundColor = "#ffe4e1";
+                return;
+            }
+
+            // Cálculo do IMC
             let imc = peso / (altura * altura);
-            imc = Math.round(imc * 100) / 100; // arredondar duas casas
+            imc = Math.round(imc * 100) / 100;
 
-            // Montar resultado
-            let resultado = "Seu IMC é: " + imc + "<br>";
+            let mensagem = "Seu IMC é: <strong>" + imc + "</strong><br>";
 
-            // Interpretação do IMC + mensagem motivacional com emojis e cores
             if (imc < 18.5) {
-                resultado += "Você está abaixo do peso. 🌸<br>";
-                resultado += "Mensagem: Seu corpo merece carinho e atenção, cuide-se com amor! 💖";
+                mensagem += "Você está abaixo do peso. 🌸<br>" +
+                            "Seu corpo merece carinho e atenção. 💖";
                 document.body.style.backgroundColor = "#f7c6d7";
-            } else if (imc < 25) {
-                resultado += "Seu peso está normal. 🌟<br>";
-                resultado += "Mensagem: Parabéns! Continue cuidando de você com hábitos saudáveis. 🏅";
+            } 
+            else if (imc < 25) {
+                mensagem += "Seu peso está normal. 🌟<br>" +
+                            "Parabéns! Continue cuidando de você. 🏅";
                 document.body.style.backgroundColor = "#a8e1e1";
-            } else if (imc < 30) {
-                resultado += "Você está acima do peso. ⚠️<br>";
-                resultado += "Mensagem: Pequenos passos diários fazem grande diferença, você consegue! 💪";
+            } 
+            else if (imc < 30) {
+                mensagem += "Você está acima do peso. ⚠️<br>" +
+                            "Pequenos passos diários fazem diferença. 💪";
                 document.body.style.backgroundColor = "#f7e1b5";
-            } else {
-                resultado += "Você está com obesidade. 🚨<br>";
-                resultado += "Mensagem: Nunca é tarde para começar a se cuidar, você é capaz! 🌱";
+            } 
+            else {
+                mensagem += "Você está com obesidade. 🚨<br>" +
+                            "Nunca é tarde para cuidar de você. 🌱";
                 document.body.style.backgroundColor = "#ffb3b3";
             }
 
-            // Mensagem especial e dicas por idade
-            if (idade > 45) {
-                resultado += "<br>Mensagem especial: Você é incrível e cada cuidado consigo mesma conta! 💖";
-                resultado += "<br>Dica: Priorize atividades físicas leves, alimentação equilibrada e momentos de autocuidado. 🌸";
-            } else if (idade >= 31) {
-                resultado += "<br>Dica: Mantenha equilíbrio entre trabalho e lazer, faça exercícios regulares e cuide da alimentação. 🌟";
-            } else if (idade >= 15) {
-                resultado += "<br>Dica: Cuide da sua energia, mantenha hábitos saudáveis e aproveite momentos de lazer. ✨";
+            if (idade >= 45) {
+                mensagem += "<br><br>✨ Mensagem especial:<br>" +
+                            "Cada cuidado consigo mesma conta. Você é incrível! 💖";
             }
 
-            // Mostrar resultado na tela
-            document.getElementById("resultado").innerHTML = resultado;
+            document.getElementById("resultado").innerHTML = mensagem;
         }
     </script>
+
 </body>
 </html>
